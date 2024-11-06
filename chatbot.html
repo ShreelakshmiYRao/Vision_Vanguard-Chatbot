@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Chatbot</title>
+    <style>
+        body {
+            background-color: #fda172;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #chat-container {
+            width: 40%;
+            margin:20px 20px 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 3px 3px 5px 5px #545252;
+            background-color: #ebdbfd;
+        }
+        
+        #chat-messages {
+            padding: 10px;
+            max-height: 400px; 
+            overflow-y: auto; 
+        }
+        
+        #user-input {
+            width: 100%;
+            padding: 20px;
+            border: none;
+            border-top: 1px solid #ccc;
+            box-sizing: border-box;
+            outline: none;
+        }
+        
+
+        .message {
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .user-message {
+            max-width: 70%;
+            padding: 10px;
+            background-color: #0a0d10;
+            float:right;          
+            color:white;
+            border: 1px solid #d2d7dc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .bot-message{
+            max-width: 70%;
+            padding: 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            float: left;
+        }
+
+        .user-message:hover {
+            background-color: #bfc7cf;
+            color: #100f0f;
+        
+        }
+        .bot-message:hover{
+            background-color: #0a82c2;
+        }
+
+        #chat-heading {
+            text-align: center;
+            background-color: #9F2B68;
+            color: #fff;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .first{
+            text-align:center;
+            color:#c20a2f;
+        }
+    
+    .second img {
+        max-width: 20%;
+        height: auto;
+        display: block; 
+        margin-left: -10px; 
+    }
+    .third
+    {
+        margin-left:1070px;
+        font-weight: Bolder;
+        margin-top: 5px;
+    } 
+    
+    a {
+        color:white;
+    }
+
+    a:visited {
+        color:black; 
+    }
+
+    </style>
+</head>
+
+<body>
+    <div class="first"><h1>Welcome to Vivekananda College Of Engineering and Technology</h1></div>
+    <div class="second">
+       
+    </div>
+    <p class="third">Chat with VISION VANGUARD</p>
+    <div id="chat-container">
+        <div id="chat-heading">Vision Vanguard</div>
+        <div id="chat-messages"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const chatMessages = document.getElementById("chat-messages");
+            const userInput = document.getElementById("user-input");
+            
+                const keywordResponses = [
+                    { keywords: ["name"], response: "Hello, This is VCET Bot." },
+                    { keywords: ["admission", "apply", "umesh"], response: "To apply for admission, visit our college website <a href='https://vcetputtur.ac.in/admissions/admission-procedure' target='_blank'>Here</a>" },
+		  { keywords: ["principal"], response: "Dr.Mahesh Prasanna K." },
+                    { keywords: ["hi","hello","namaste","hey","hy"],response:"Hello, This is VCET Bot. How can I help you?"},
+                    { keywords: ["fees","fee","fees structure","amount","money"],response:"Dr.Mahesh Prasanna K"},
+                    { keywords: ["branch","course","stream"],response:"Computer Science and Engineering, Computer Science and Engineering (Data Science), Artificial Intelligence and Machine Learning, Electronics and Communication Engineering, Mechanical Engineering, Civil Engineering"},
+ { keywords: ["principal","introduction","campus","about college","about vcet"],response:"Visit <a href='https://vcetputtur.ac.in/about-vcet/about-us' target='_blank'>Here</a>"},
+                    { keywords: ["information","introduction","campus","about college","about vcet"],response:"Visit <a href='https://vcetputtur.ac.in/about-vcet/about-us' target='_blank'>Here</a>"},
+                    { keywords: ["highest package","highest salary","highest LPA"],response:"The highest package offered is 15 LPA, the average package is 6 LPA, and the lowest package was 3 LPA"},
+                    { keywords: ["events","event","functions","cultural","celebration","celebrations","fest","chilume"],response:"A Cultural Unit is Bhoomika Kala Sangha. To know more about the events <a href='https://cells.vcetputtur.ac.in/Bhoomika/' target='_blank'>Visit</a>"},
+                    { keywords: ["question paper","question papers","old papers","old questions","old question"], response: "You can refer this old question papers: <a href='https://keerthi2911.github.io/VCETinfo.Dtech/' target='_blank'>Here</a>" },
+                    { keywords: ["placement","about placement","interview","interviews"], response: "VCET has a good placement offers and to know more about placement <a href='https://vcetputtur.ac.in/placements' target='_blank'>Click Here</a>" },
+                    { keywords: ["history"], response: "To know about the history of VCET.<a href='https://vcetputtur.ac.in/about-vcet/about-us' target='_blank'>Here</a>" },
+                    { keywords: ["contact","phone","email","E-mail","ph no","phone no","ph number","phone number"],response:"+91 8251 235955,principal@vcetputtur.ac.in"},
+                    { keywords: ["address","place"], response: "Address: Q5JM+CQQ, Vivekananda Campus, Nehru Nagar, Puttur, Karnataka 574203,Phone: 099455 75955" },
+                    { keywords: ["cgpa","sgpa","score","marks","percentage","aggregates","backlogs"],response:"Login and check your marks <a href='https://cells.vcetputtur.ac.in/Placement/' target='_blank'>Here</a>"},
+                    { keywords: ["facilities","hostel","ground","canteen","cafeteria","utilities","utility","transportation","fcility"],response:"<pre><a href='https://vcetputtur.ac.in/facilities/hostel' target='_blank'>Hostel</a>     <a href='https://vcetputtur.ac.in/facilities/utilities' target='_blank'>Utilities</a>     <a href='https://vcetputtur.ac.in/facilities/canteen' target='_blank'>Canteen</a>   <a href='https://vcetputtur.ac.in/facilities/ground' target='_blank'>Ground</a></pre>"},                       
+                    { keywords: ["lab","labs"],response:"VCET provides oppurtunities to the young minds to learn practically and make new innovations"},
+                    { keywords: ["insta","instagram","social media","online platform","accounts"],response:"<pre><a href='https://instagram.com/vcet_puttur_official?igshid=OGQ5ZDc2ODk2ZA==' target='_blank'>VCET Official</a>   <a href='https://instagram.com/vcetdiaries?igshid=OGQ5ZDc2ODk2ZA==' target='_blank'>VCET Diaries</a></pre>"},
+                    { keywords: ["libraries","lib","library","books","book"],response:"Library is a place where books and sources of information are stored. They make it easier for people to get access to them for various purposes. VCET gives easy access to gain knowledge by using Digital Libraries"},
+                ];
+                userInput.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") {
+                        const userMessage = userInput.value;
+                        appendMessage("You", userMessage, "user-message");
+            
+                        const botResponse = generateBotResponse(userMessage);
+            
+                        setTimeout(function () {
+                            appendMessage("VCET", botResponse, "bot-message");
+                            saveConversation(userMessage, botResponse);
+                            userInput.value = "";
+                        }, 500);
+                    }
+                });
+            
+                function generateBotResponse(userMessage) {
+                    const matchingResponse = keywordResponses.find(response =>
+                        response.keywords.some(keyword => userMessage.toLowerCase().includes(keyword))
+                    );
+                
+                    return matchingResponse ? matchingResponse.response : "I'm not sure how to respond to that. Can you please ask another question?";
+                }
+                
+            
+                function appendMessage(sender, message, messageType) {
+                    const messageDiv = document.createElement("div");
+                    messageDiv.className = "message";
+                    const messageContent = document.createElement("div");
+                    messageContent.className = messageType;
+                    messageContent.innerHTML = message;
+                    messageDiv.appendChild(messageContent);
+                    chatMessages.appendChild(messageDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+        
+            function saveConversation(userMessage, botMessage) {
+               
+                fetch('/api/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ userMessage, botMessage }),
+                })
+                    .then(response => response.text())
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            }
+        
+        });
+        
+    </script>
+    
+</body>
+
+</html>
